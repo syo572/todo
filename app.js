@@ -5,18 +5,13 @@ const mysql = require('mysql');
 //viewエンジンをejsであることを設定
 app.set("view engine", "ejs");
 
-//top画面
-// app.get('/', function(req, res){
-//     res.render('top.ejs')
-// });
+//ログイン・新規登録、画面
+app.get('/signup',(req,res) => {
+  res.render('signup.ejs');
+});
+//トップ画面
 app.get('/', (req, res) => {
-    connection.query(
-      'SELECT * FROM users',
-      (error, results) => {
-        console.log(results);
-        res.render('hello.ejs');
-      }
-    );
+  res.render('top.ejs');
   });
 
 //sqlを接続
