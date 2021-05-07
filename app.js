@@ -5,9 +5,14 @@ const mysql = require('mysql');
 //viewエンジンをejsであることを設定
 app.set("view engine", "ejs");
 
-//ログイン・新規登録、画面
-app.get('/signup',(req,res) => {
-  res.render('signup.ejs');
+//ログイン画面
+app.get('/login',(req,res) => {
+  res.render('login.ejs');
+});
+//認証処理
+app.post('/login',(req,res) => {
+  const email = req.body;
+  console.log(email);
 });
 //トップ画面
 app.get('/', (req, res) => {
