@@ -1,6 +1,12 @@
 const express = require("express");
 const app = express();
 const mysql = require('mysql');
+//日付生成
+require('date-utils');
+
+var dt = new Date();
+var formatted = dt.toFormat("YYYYMMDDHH24MISS");
+
 
 //ここ要確認
 app.use(express.json())
@@ -23,20 +29,24 @@ app.get('/', (req, res) => {
   connection.query(
     'SELECT * FROM article',
     (error, result) => {
-      res.render('top.ejs', { article: result });
+      res.render('top.ejs', {
+        article: result,
+        date: formatted
+      });
     }
   );
 });
-//トップ画面処理
+//投稿追加処理
 app.post('/create', (req, res) => {
   connection.query(
-    'INSERT INTO article (text) VALUES (?)',
+    'INSERT INTO article (text,dt) VALUES (?,now())',
     [req.body.add],
     (error, result) => {
       res.redirect('/');
     }
   );
 });
+
 
 //sqlを接続
 const connection = mysql.createConnection({
